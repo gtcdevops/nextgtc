@@ -4,8 +4,10 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 192, 220;
+  --background-end-rgb: 255, 535, 522;
   --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 245, 245;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,3 +27,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+html {
+  font-family: var(--font-inter);
+}
+
+
+

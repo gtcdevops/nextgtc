@@ -1,0 +1,20 @@
+{
+    "name": "Ground Transport Concierge",
+    "short_name": "GTC",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#cccccc",
+    "description": "Singapore Ground Transport Booking Available 24 Hours",
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

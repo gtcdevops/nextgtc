@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "nextgtc",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-12-15T08:56:48.802Z"
 }
