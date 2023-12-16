@@ -2,49 +2,51 @@
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-
+import { createTodo } from './createTodo'
 
 
 export default function BookingSummary () {
 
   const [agree, setAgree] = useState(false);
+
   const searchParams = useSearchParams();
 
-  const name = searchParams.get('name')
-  const email = searchParams.get('email')
-  const pax = searchParams.get('pax')
-  const luggage = searchParams.get('luggage')
-  const typeoftransfer = searchParams.get('typeoftransfer')
-  const pickup = searchParams.get('pickup')
-  const dropoff = searchParams.get('dropoff')
-  const date = searchParams.get('date')
-  const flightno = searchParams.get('flightno')
-  const pickuptime = searchParams.get('pickuptime')
-  const contactno = searchParams.get('contactno')
-  const postal = searchParams.get('postal')
-  const fare = searchParams.get('fare')
-  const typeofvehicle = searchParams.get('vehicle')
+  const name = searchParams.get('name');
+  const email = searchParams.get('email');
+  const pax = searchParams.get('pax');
+  const luggage = searchParams.get('luggage');
+  const typeoftransfer = searchParams.get('typeoftransfer');
+  const pickup = searchParams.get('pickup');
+  const dropoff = searchParams.get('dropoff');
+  const date = searchParams.get('date');
+  const flightno = searchParams.get('flightno');
+  const pickuptime = searchParams.get('pickuptime');
+  const contactno = searchParams.get('contactno');
+  const postal = searchParams.get('postal');
+  const fare = searchParams.get('fare');
+  const typeofvehicle = searchParams.get('vehicle');
   
   return (
 
-    <form>
+    <form onSubmit={createTodo}>
 
-      <input type="hidden" id="name" name="name" value="" />
-      <input type="hidden" id="email" name="email" value="" />
-      <input type="hidden" id="pax" name="pax" value="" />
-      <input type="hidden" id="luggage" name="luggage" value="" />
-      <input type="hidden" id="typeoftransfer" name="typeoftransfer" value="" />
-      <input type="hidden" id="pickup" name="pickup" value="" />
-      <input type="hidden" id="dropoff" name="dropoff" value="" />
-      <input type="hidden" id="date" name="date" value="" />
-      <input type="hidden" id="flightno" name="flightno" value="" />
-      <input type="hidden" id="pickuptime" name="pickuptime" value="" />
-      <input type="hidden" id="contactno" name="contactno" value="" />
-      <input type="hidden" id="postal" name="postal" value="" />
-      <input type="hidden" id="fare" name="fare" value="" />
-      <input type="hidden" id="typeofvehicle" name="typeofvehicle" value="" />
-      <input type="hidden" id="agree" name="agree" value="" />
-      
+      {/* <div className="hidden">
+      <input type="text" name="name" value="" />
+      <input type="text" name="email" />
+      <input type="text" name="pax"  />
+      <input type="text" name="luggage" />
+      <input type="text" name="typeoftransfer" />
+      <input type="text" name="pickup"  />
+      <input type="text" name="dropoff" />
+      <input type="text" name="date"  />
+      <input type="text" name="flightno" />
+      <input type="text" name="pickuptime" />
+      <input type="text" name="contactno" />
+      <input type="text" name="postal" />
+      <input type="text" name="fare" />
+      <input type="text" name="typeofvehicle" />
+      <input type="text" name="agree" />
+      </div> */}
 
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
 

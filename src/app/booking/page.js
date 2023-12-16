@@ -2,57 +2,61 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import BookingSummary from "../components/BookingSummary"
 
-import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/api';
-import { cookies } from 'next/headers';
-import { revalidatePath } from 'next/cache';
-import * as mutations from '@/graphql/mutations';
-import config from '@/amplifyconfiguration.json';
-
-const cookiesClient = generateServerClientUsingCookies({
-  config,
-  cookies
-});
-
-async function createBookingData(formData) {
-  'use server';
-  const { data } = await cookiesClient.graphql({
-    query: mutations.createBookingData,
-    variables: {
-      input: {
-        name: formData.get('name')?.toString() ?? '',
-        email: formData.get('name')?.toString() ?? '',
-        pax: formData.get('name')?.toString() ?? '',
-        luggage: formData.get('name')?.toString() ?? '',
-        typeoftransfer: formData.get('name')?.toString() ?? '',
-        pickup: formData.get('name')?.toString() ?? '',
-        dropoff: formData.get('name')?.toString() ?? '',
-        date: formData.get('name')?.toString() ?? '',
-        flightno: formData.get('name')?.toString() ?? '',
-        pickuptime: formData.get('name')?.toString() ?? '',
-        contactno: formData.get('name')?.toString() ?? '',
-        postal: formData.get('name')?.toString() ?? '',
-        fare: formData.get('name')?.toString() ?? '',
-        typeofvehicle: formData.get('name')?.toString() ?? '',
-        agree: formData.get('name')?.toString() ?? '',
-
-      }
-    }
-  });
-  console.log('Created Todo: ', data?.createBookingData);
-  revalidatePath('/');
-} 
+// import { Amplify } from 'aws-amplify';
+// Amplify.configure(config);
 
 
+// import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/api';
+// import { cookies } from 'next/headers';
+// import { revalidatePath } from 'next/cache';
+// import * as mutations from '@/graphql/mutations';
+// import config from '@/amplifyconfiguration.json';
+
+// const cookiesClient = generateServerClientUsingCookies({
+//   config,
+//   cookies
+// });
+
+// async function createTodo(formData) {
+//   'use server';
+//   const { data } = await cookiesClient.graphql({
+//     query: mutations.createTodo,
+//     variables: {
+//       input: {
+//         name: formData.get('name')?.toString() ?? '',
+//         email: formData.get('email')?.toString() ?? '',
+//         name: formData.get('pax')?.toString() ?? '',
+//         name: formData.get('luggage')?.toString() ?? '',
+//         name: formData.get('typeoftransfer')?.toString() ?? '',
+//         name: formData.get('pickup')?.toString() ?? '',
+//         name: formData.get('dropoff')?.toString() ?? '',
+//         name: formData.get('date')?.toString() ?? '',
+//         name: formData.get('flightno')?.toString() ?? '',
+//         name: formData.get('pickuptime')?.toString() ?? '',
+//         name: formData.get('contactno')?.toString() ?? '',
+//         name: formData.get('postal')?.toString() ?? '',
+//         name: formData.get('fare')?.toString() ?? '',
+//         name: formData.get('typeofvehicle')?.toString() ?? '',
+//         name: formData.get('agree')?.toString() ?? '',
+
+//       }
+//     }
+//   });
+//   console.log('Created Todo: ', data?.createTodo);
+//   revalidatePath('/');
+// } 
 
 const Page = () => {
   return (
     <main className="min-h-screen items-center">
     <Navbar />
 
-<BookingSummary onSubmit={createBookingData}/>
+<BookingSummary />
+{/* <BookingSummary onSubmit={createTodo}/> */}
   <Footer />
   </main>  
   )
 }
 
 export default Page;
+

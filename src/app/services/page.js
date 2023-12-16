@@ -10,13 +10,16 @@ const cookiesClient = generateServerClientUsingCookies({
   cookies
 });
 
-async function createTodo(formData) {
+async function createTodo(FormData) {
   'use server';
   const { data } = await cookiesClient.graphql({
     query: mutations.createTodo,
     variables: {
       input: {
-        name: formData.get('name')?.toString() ?? ''
+        name: FormData.get('name')?.toString() ?? '',
+        email: FormData.get('email')?.toString() ?? '',
+        contactno: FormData.get('contactno')?.toString() ?? '',
+        fare: FormData.get('fare')?.toString() ?? ''
       }
     }
   });
@@ -39,7 +42,10 @@ export default async function Home() {
  
       <form action={createTodo}>
         <input name="name" placeholder="Add a todo" />
-        <button type="submit">Add</button>
+        <input name="email" placeholder="Add a email" />
+        <input name="contactno" placeholder="Add a contactno" />
+        <input name="fare" placeholder="Add a fare" />
+        <button type="submit" className="p-6 flex mx-auto">Add</button>
       </form>
     </div>
   );
