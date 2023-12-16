@@ -1,11 +1,11 @@
 "use client";
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createTodo } from './createTodo'
 
 
-export default function BookingSummary () {
+export default function BookingSummary (props) {
 
   const [agree, setAgree] = useState(false);
 
@@ -28,14 +28,16 @@ export default function BookingSummary () {
   
   return (
 
+
+
     <form onSubmit={createTodo}>
 
-      {/* <div className="hidden">
-      <input type="text" name="name" value="" />
-      <input type="text" name="email" />
-      <input type="text" name="pax"  />
-      <input type="text" name="luggage" />
-      <input type="text" name="typeoftransfer" />
+<div className="hidden">
+      <input type="text" name={`${name}`} placeholder="Add a todo" />
+      <input type="text" name={`${email}`} placeholder="Add a todo" />
+      <input type="text" name={`${pax}`} placeholder="Add a todo" />
+      {/* <input type="text" name="luggage" description={`${luggage}`} />
+      <input type="text" name="typeoftransfer" description={`${typeoftransfer}`} />
       <input type="text" name="pickup"  />
       <input type="text" name="dropoff" />
       <input type="text" name="date"  />
@@ -45,8 +47,8 @@ export default function BookingSummary () {
       <input type="text" name="postal" />
       <input type="text" name="fare" />
       <input type="text" name="typeofvehicle" />
-      <input type="text" name="agree" />
-      </div> */}
+      <input type="text" name="agree" />  */}
+      </div>
 
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
 
@@ -180,8 +182,8 @@ export default function BookingSummary () {
           </div>
       </div>
 
-    
+ 
     </form>
-
   )
+  
 }
