@@ -34,8 +34,8 @@ export default function Navbar() {
                 className="z-40 hover:z-50 md:w-full w-32"
                 src="/gtc_logo_2.svg"
                 alt="GTC Logo"
-                // width={180}
-                // height={40}
+                width={0}
+                height={0}
               />
             </Link>
           
@@ -146,11 +146,11 @@ export default function Navbar() {
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Ground Tranpsort Concierge</span>
               <Image
-            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert w-30 h-auto"
             src="/gtc_logo_2.svg"
             alt="GTC Logo"
-            width={100}
-            height={37}
+            width={0}
+            height={0}
             priority
           />
             </a>

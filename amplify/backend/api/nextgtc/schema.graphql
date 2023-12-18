@@ -9,11 +9,12 @@ type Todo @model @auth(rules: [{allow: public}]) {
   pickup: String
   dropoff: String
   postal: String
-  pickuptime: String
   flightno: String
   typeofvehicle: String
   fare: String
   agree: Boolean
   description: String
+  date: String
+  pickuptime: AWSTime
 }
  

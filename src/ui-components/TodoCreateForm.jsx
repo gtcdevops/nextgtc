@@ -38,12 +38,13 @@ export default function TodoCreateForm(props) {
     pickup: "",
     dropoff: "",
     postal: "",
-    pickuptime: "",
     flightno: "",
     typeofvehicle: "",
     fare: "",
     agree: false,
     description: "",
+    date: "",
+    pickuptime: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
@@ -56,7 +57,6 @@ export default function TodoCreateForm(props) {
   const [pickup, setPickup] = React.useState(initialValues.pickup);
   const [dropoff, setDropoff] = React.useState(initialValues.dropoff);
   const [postal, setPostal] = React.useState(initialValues.postal);
-  const [pickuptime, setPickuptime] = React.useState(initialValues.pickuptime);
   const [flightno, setFlightno] = React.useState(initialValues.flightno);
   const [typeofvehicle, setTypeofvehicle] = React.useState(
     initialValues.typeofvehicle
@@ -66,6 +66,8 @@ export default function TodoCreateForm(props) {
   const [description, setDescription] = React.useState(
     initialValues.description
   );
+  const [date, setDate] = React.useState(initialValues.date);
+  const [pickuptime, setPickuptime] = React.useState(initialValues.pickuptime);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -77,12 +79,13 @@ export default function TodoCreateForm(props) {
     setPickup(initialValues.pickup);
     setDropoff(initialValues.dropoff);
     setPostal(initialValues.postal);
-    setPickuptime(initialValues.pickuptime);
     setFlightno(initialValues.flightno);
     setTypeofvehicle(initialValues.typeofvehicle);
     setFare(initialValues.fare);
     setAgree(initialValues.agree);
     setDescription(initialValues.description);
+    setDate(initialValues.date);
+    setPickuptime(initialValues.pickuptime);
     setErrors({});
   };
   const validations = {
@@ -95,12 +98,13 @@ export default function TodoCreateForm(props) {
     pickup: [],
     dropoff: [],
     postal: [],
-    pickuptime: [],
     flightno: [],
     typeofvehicle: [],
     fare: [],
     agree: [],
     description: [],
+    date: [],
+    pickuptime: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -137,12 +141,13 @@ export default function TodoCreateForm(props) {
           pickup,
           dropoff,
           postal,
-          pickuptime,
           flightno,
           typeofvehicle,
           fare,
           agree,
           description,
+          date,
+          pickuptime,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -214,12 +219,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -252,12 +258,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -294,12 +301,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.contactno ?? value;
@@ -332,12 +340,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.typeoftransfer ?? value;
@@ -370,12 +379,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.pax ?? value;
@@ -408,12 +418,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.luggage ?? value;
@@ -446,12 +457,13 @@ export default function TodoCreateForm(props) {
               pickup: value,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.pickup ?? value;
@@ -484,12 +496,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff: value,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.dropoff ?? value;
@@ -522,12 +535,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal: value,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.postal ?? value;
@@ -541,44 +555,6 @@ export default function TodoCreateForm(props) {
         errorMessage={errors.postal?.errorMessage}
         hasError={errors.postal?.hasError}
         {...getOverrideProps(overrides, "postal")}
-      ></TextField>
-      <TextField
-        label="Pickuptime"
-        isRequired={false}
-        isReadOnly={false}
-        value={pickuptime}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              email,
-              contactno,
-              typeoftransfer,
-              pax,
-              luggage,
-              pickup,
-              dropoff,
-              postal,
-              pickuptime: value,
-              flightno,
-              typeofvehicle,
-              fare,
-              agree,
-              description,
-            };
-            const result = onChange(modelFields);
-            value = result?.pickuptime ?? value;
-          }
-          if (errors.pickuptime?.hasError) {
-            runValidationTasks("pickuptime", value);
-          }
-          setPickuptime(value);
-        }}
-        onBlur={() => runValidationTasks("pickuptime", pickuptime)}
-        errorMessage={errors.pickuptime?.errorMessage}
-        hasError={errors.pickuptime?.hasError}
-        {...getOverrideProps(overrides, "pickuptime")}
       ></TextField>
       <TextField
         label="Flightno"
@@ -598,12 +574,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno: value,
               typeofvehicle,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.flightno ?? value;
@@ -636,12 +613,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle: value,
               fare,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.typeofvehicle ?? value;
@@ -674,12 +652,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare: value,
               agree,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.fare ?? value;
@@ -712,12 +691,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree: value,
               description,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.agree ?? value;
@@ -750,12 +730,13 @@ export default function TodoCreateForm(props) {
               pickup,
               dropoff,
               postal,
-              pickuptime,
               flightno,
               typeofvehicle,
               fare,
               agree,
               description: value,
+              date,
+              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -769,6 +750,85 @@ export default function TodoCreateForm(props) {
         errorMessage={errors.description?.errorMessage}
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
+      ></TextField>
+      <TextField
+        label="Date"
+        isRequired={false}
+        isReadOnly={false}
+        value={date}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              contactno,
+              typeoftransfer,
+              pax,
+              luggage,
+              pickup,
+              dropoff,
+              postal,
+              flightno,
+              typeofvehicle,
+              fare,
+              agree,
+              description,
+              date: value,
+              pickuptime,
+            };
+            const result = onChange(modelFields);
+            value = result?.date ?? value;
+          }
+          if (errors.date?.hasError) {
+            runValidationTasks("date", value);
+          }
+          setDate(value);
+        }}
+        onBlur={() => runValidationTasks("date", date)}
+        errorMessage={errors.date?.errorMessage}
+        hasError={errors.date?.hasError}
+        {...getOverrideProps(overrides, "date")}
+      ></TextField>
+      <TextField
+        label="Pickuptime"
+        isRequired={false}
+        isReadOnly={false}
+        type="time"
+        value={pickuptime}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              contactno,
+              typeoftransfer,
+              pax,
+              luggage,
+              pickup,
+              dropoff,
+              postal,
+              flightno,
+              typeofvehicle,
+              fare,
+              agree,
+              description,
+              date,
+              pickuptime: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.pickuptime ?? value;
+          }
+          if (errors.pickuptime?.hasError) {
+            runValidationTasks("pickuptime", value);
+          }
+          setPickuptime(value);
+        }}
+        onBlur={() => runValidationTasks("pickuptime", pickuptime)}
+        errorMessage={errors.pickuptime?.errorMessage}
+        hasError={errors.pickuptime?.hasError}
+        {...getOverrideProps(overrides, "pickuptime")}
       ></TextField>
       <Flex
         justifyContent="space-between"

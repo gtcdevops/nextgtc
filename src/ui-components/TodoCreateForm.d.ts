@@ -31,12 +31,13 @@ export declare type TodoCreateFormInputValues = {
     pickup?: string;
     dropoff?: string;
     postal?: string;
-    pickuptime?: string;
     flightno?: string;
     typeofvehicle?: string;
     fare?: string;
     agree?: boolean;
     description?: string;
+    date?: string;
+    pickuptime?: string;
 };
 export declare type TodoCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -48,12 +49,13 @@ export declare type TodoCreateFormValidationValues = {
     pickup?: ValidationFunction<string>;
     dropoff?: ValidationFunction<string>;
     postal?: ValidationFunction<string>;
-    pickuptime?: ValidationFunction<string>;
     flightno?: ValidationFunction<string>;
     typeofvehicle?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
     agree?: ValidationFunction<boolean>;
     description?: ValidationFunction<string>;
+    date?: ValidationFunction<string>;
+    pickuptime?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TodoCreateFormOverridesProps = {
@@ -67,12 +69,13 @@ export declare type TodoCreateFormOverridesProps = {
     pickup?: PrimitiveOverrideProps<TextFieldProps>;
     dropoff?: PrimitiveOverrideProps<TextFieldProps>;
     postal?: PrimitiveOverrideProps<TextFieldProps>;
-    pickuptime?: PrimitiveOverrideProps<TextFieldProps>;
     flightno?: PrimitiveOverrideProps<TextFieldProps>;
     typeofvehicle?: PrimitiveOverrideProps<TextFieldProps>;
     fare?: PrimitiveOverrideProps<TextFieldProps>;
     agree?: PrimitiveOverrideProps<SwitchFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
+    date?: PrimitiveOverrideProps<TextFieldProps>;
+    pickuptime?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TodoCreateFormProps = React.PropsWithChildren<{
     overrides?: TodoCreateFormOverridesProps | undefined | null;

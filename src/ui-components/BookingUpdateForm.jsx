@@ -6,22 +6,16 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  SwitchField,
-  TextField,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getTodo } from "../graphql/queries";
-import { updateTodo } from "../graphql/mutations";
+import { getBooking } from "../graphql/queries";
+import { updateBooking } from "../graphql/mutations";
 const client = generateClient();
-export default function TodoUpdateForm(props) {
+export default function BookingUpdateForm(props) {
   const {
     id: idProp,
-    todo: todoModelProp,
+    booking: bookingModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -43,10 +37,9 @@ export default function TodoUpdateForm(props) {
     flightno: "",
     typeofvehicle: "",
     fare: "",
-    agree: false,
-    description: "",
     date: "",
-    pickuptime: "",
+    agree: "",
+    description: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
@@ -64,16 +57,15 @@ export default function TodoUpdateForm(props) {
     initialValues.typeofvehicle
   );
   const [fare, setFare] = React.useState(initialValues.fare);
+  const [date, setDate] = React.useState(initialValues.date);
   const [agree, setAgree] = React.useState(initialValues.agree);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
-  const [date, setDate] = React.useState(initialValues.date);
-  const [pickuptime, setPickuptime] = React.useState(initialValues.pickuptime);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = todoRecord
-      ? { ...initialValues, ...todoRecord }
+    const cleanValues = bookingRecord
+      ? { ...initialValues, ...bookingRecord }
       : initialValues;
     setName(cleanValues.name);
     setEmail(cleanValues.email);
@@ -87,31 +79,30 @@ export default function TodoUpdateForm(props) {
     setFlightno(cleanValues.flightno);
     setTypeofvehicle(cleanValues.typeofvehicle);
     setFare(cleanValues.fare);
+    setDate(cleanValues.date);
     setAgree(cleanValues.agree);
     setDescription(cleanValues.description);
-    setDate(cleanValues.date);
-    setPickuptime(cleanValues.pickuptime);
     setErrors({});
   };
-  const [todoRecord, setTodoRecord] = React.useState(todoModelProp);
+  const [bookingRecord, setBookingRecord] = React.useState(bookingModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await client.graphql({
-              query: getTodo.replaceAll("__typename", ""),
+              query: getBooking.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getTodo
-        : todoModelProp;
-      setTodoRecord(record);
+          )?.data?.getBooking
+        : bookingModelProp;
+      setBookingRecord(record);
     };
     queryData();
-  }, [idProp, todoModelProp]);
-  React.useEffect(resetStateValues, [todoRecord]);
+  }, [idProp, bookingModelProp]);
+  React.useEffect(resetStateValues, [bookingRecord]);
   const validations = {
-    name: [{ type: "Required" }],
-    email: [{ type: "Email" }],
+    name: [],
+    email: [],
     contactno: [],
     typeoftransfer: [],
     pax: [],
@@ -122,10 +113,9 @@ export default function TodoUpdateForm(props) {
     flightno: [],
     typeofvehicle: [],
     fare: [],
+    date: [],
     agree: [],
     description: [],
-    date: [],
-    pickuptime: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -153,7 +143,7 @@ export default function TodoUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
+          name: name ?? null,
           email: email ?? null,
           contactno: contactno ?? null,
           typeoftransfer: typeoftransfer ?? null,
@@ -165,10 +155,9 @@ export default function TodoUpdateForm(props) {
           flightno: flightno ?? null,
           typeofvehicle: typeofvehicle ?? null,
           fare: fare ?? null,
+          date: date ?? null,
           agree: agree ?? null,
           description: description ?? null,
-          date: date ?? null,
-          pickuptime: pickuptime ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -199,10 +188,10 @@ export default function TodoUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateTodo.replaceAll("__typename", ""),
+            query: updateBooking.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: todoRecord.id,
+                id: bookingRecord.id,
                 ...modelFields,
               },
             },
@@ -217,12 +206,12 @@ export default function TodoUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "TodoUpdateForm")}
+      {...getOverrideProps(overrides, "BookingUpdateForm")}
       {...rest}
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
@@ -241,10 +230,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -280,10 +268,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -302,13 +289,9 @@ export default function TodoUpdateForm(props) {
         label="Contactno"
         isRequired={false}
         isReadOnly={false}
-        type="number"
-        step="any"
         value={contactno}
         onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
@@ -323,10 +306,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.contactno ?? value;
@@ -362,10 +344,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.typeoftransfer ?? value;
@@ -401,10 +382,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.pax ?? value;
@@ -440,10 +420,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.luggage ?? value;
@@ -479,10 +458,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.pickup ?? value;
@@ -518,10 +496,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.dropoff ?? value;
@@ -557,10 +534,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.postal ?? value;
@@ -596,10 +572,9 @@ export default function TodoUpdateForm(props) {
               flightno: value,
               typeofvehicle,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.flightno ?? value;
@@ -635,10 +610,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle: value,
               fare,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.typeofvehicle ?? value;
@@ -674,10 +648,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare: value,
+              date,
               agree,
               description,
-              date,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.fare ?? value;
@@ -691,84 +664,6 @@ export default function TodoUpdateForm(props) {
         errorMessage={errors.fare?.errorMessage}
         hasError={errors.fare?.hasError}
         {...getOverrideProps(overrides, "fare")}
-      ></TextField>
-      <SwitchField
-        label="Agree"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={agree}
-        onChange={(e) => {
-          let value = e.target.checked;
-          if (onChange) {
-            const modelFields = {
-              name,
-              email,
-              contactno,
-              typeoftransfer,
-              pax,
-              luggage,
-              pickup,
-              dropoff,
-              postal,
-              flightno,
-              typeofvehicle,
-              fare,
-              agree: value,
-              description,
-              date,
-              pickuptime,
-            };
-            const result = onChange(modelFields);
-            value = result?.agree ?? value;
-          }
-          if (errors.agree?.hasError) {
-            runValidationTasks("agree", value);
-          }
-          setAgree(value);
-        }}
-        onBlur={() => runValidationTasks("agree", agree)}
-        errorMessage={errors.agree?.errorMessage}
-        hasError={errors.agree?.hasError}
-        {...getOverrideProps(overrides, "agree")}
-      ></SwitchField>
-      <TextField
-        label="Description"
-        isRequired={false}
-        isReadOnly={false}
-        value={description}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              email,
-              contactno,
-              typeoftransfer,
-              pax,
-              luggage,
-              pickup,
-              dropoff,
-              postal,
-              flightno,
-              typeofvehicle,
-              fare,
-              agree,
-              description: value,
-              date,
-              pickuptime,
-            };
-            const result = onChange(modelFields);
-            value = result?.description ?? value;
-          }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
-          }
-          setDescription(value);
-        }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
       ></TextField>
       <TextField
         label="Date"
@@ -791,10 +686,9 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
+              date: value,
               agree,
               description,
-              date: value,
-              pickuptime,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -810,11 +704,10 @@ export default function TodoUpdateForm(props) {
         {...getOverrideProps(overrides, "date")}
       ></TextField>
       <TextField
-        label="Pickuptime"
+        label="Agree"
         isRequired={false}
         isReadOnly={false}
-        type="time"
-        value={pickuptime}
+        value={agree}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -831,23 +724,60 @@ export default function TodoUpdateForm(props) {
               flightno,
               typeofvehicle,
               fare,
-              agree,
-              description,
               date,
-              pickuptime: value,
+              agree: value,
+              description,
             };
             const result = onChange(modelFields);
-            value = result?.pickuptime ?? value;
+            value = result?.agree ?? value;
           }
-          if (errors.pickuptime?.hasError) {
-            runValidationTasks("pickuptime", value);
+          if (errors.agree?.hasError) {
+            runValidationTasks("agree", value);
           }
-          setPickuptime(value);
+          setAgree(value);
         }}
-        onBlur={() => runValidationTasks("pickuptime", pickuptime)}
-        errorMessage={errors.pickuptime?.errorMessage}
-        hasError={errors.pickuptime?.hasError}
-        {...getOverrideProps(overrides, "pickuptime")}
+        onBlur={() => runValidationTasks("agree", agree)}
+        errorMessage={errors.agree?.errorMessage}
+        hasError={errors.agree?.hasError}
+        {...getOverrideProps(overrides, "agree")}
+      ></TextField>
+      <TextField
+        label="Description"
+        isRequired={false}
+        isReadOnly={false}
+        value={description}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              contactno,
+              typeoftransfer,
+              pax,
+              luggage,
+              pickup,
+              dropoff,
+              postal,
+              flightno,
+              typeofvehicle,
+              fare,
+              date,
+              agree,
+              description: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.description ?? value;
+          }
+          if (errors.description?.hasError) {
+            runValidationTasks("description", value);
+          }
+          setDescription(value);
+        }}
+        onBlur={() => runValidationTasks("description", description)}
+        errorMessage={errors.description?.errorMessage}
+        hasError={errors.description?.hasError}
+        {...getOverrideProps(overrides, "description")}
       ></TextField>
       <Flex
         justifyContent="space-between"
@@ -860,7 +790,7 @@ export default function TodoUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || todoModelProp)}
+          isDisabled={!(idProp || bookingModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -872,7 +802,7 @@ export default function TodoUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || todoModelProp) ||
+              !(idProp || bookingModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -21,10 +21,10 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type TodoUpdateFormInputValues = {
+export declare type BookingCreateFormInputValues = {
     name?: string;
     email?: string;
-    contactno?: number;
+    contactno?: string;
     typeoftransfer?: string;
     pax?: string;
     luggage?: string;
@@ -34,15 +34,14 @@ export declare type TodoUpdateFormInputValues = {
     flightno?: string;
     typeofvehicle?: string;
     fare?: string;
-    agree?: boolean;
-    description?: string;
     date?: string;
-    pickuptime?: string;
+    agree?: string;
+    description?: string;
 };
-export declare type TodoUpdateFormValidationValues = {
+export declare type BookingCreateFormValidationValues = {
     name?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
-    contactno?: ValidationFunction<number>;
+    contactno?: ValidationFunction<string>;
     typeoftransfer?: ValidationFunction<string>;
     pax?: ValidationFunction<string>;
     luggage?: ValidationFunction<string>;
@@ -52,14 +51,13 @@ export declare type TodoUpdateFormValidationValues = {
     flightno?: ValidationFunction<string>;
     typeofvehicle?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
-    agree?: ValidationFunction<boolean>;
-    description?: ValidationFunction<string>;
     date?: ValidationFunction<string>;
-    pickuptime?: ValidationFunction<string>;
+    agree?: ValidationFunction<string>;
+    description?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type TodoUpdateFormOverridesProps = {
-    TodoUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type BookingCreateFormOverridesProps = {
+    BookingCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
     contactno?: PrimitiveOverrideProps<TextFieldProps>;
@@ -72,20 +70,18 @@ export declare type TodoUpdateFormOverridesProps = {
     flightno?: PrimitiveOverrideProps<TextFieldProps>;
     typeofvehicle?: PrimitiveOverrideProps<TextFieldProps>;
     fare?: PrimitiveOverrideProps<TextFieldProps>;
-    agree?: PrimitiveOverrideProps<SwitchFieldProps>;
-    description?: PrimitiveOverrideProps<TextFieldProps>;
     date?: PrimitiveOverrideProps<TextFieldProps>;
-    pickuptime?: PrimitiveOverrideProps<TextFieldProps>;
+    agree?: PrimitiveOverrideProps<TextFieldProps>;
+    description?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type TodoUpdateFormProps = React.PropsWithChildren<{
-    overrides?: TodoUpdateFormOverridesProps | undefined | null;
+export declare type BookingCreateFormProps = React.PropsWithChildren<{
+    overrides?: BookingCreateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
-    todo?: any;
-    onSubmit?: (fields: TodoUpdateFormInputValues) => TodoUpdateFormInputValues;
-    onSuccess?: (fields: TodoUpdateFormInputValues) => void;
-    onError?: (fields: TodoUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: TodoUpdateFormInputValues) => TodoUpdateFormInputValues;
-    onValidate?: TodoUpdateFormValidationValues;
+    clearOnSuccess?: boolean;
+    onSubmit?: (fields: BookingCreateFormInputValues) => BookingCreateFormInputValues;
+    onSuccess?: (fields: BookingCreateFormInputValues) => void;
+    onError?: (fields: BookingCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: BookingCreateFormInputValues) => BookingCreateFormInputValues;
+    onValidate?: BookingCreateFormValidationValues;
 } & React.CSSProperties>;
-export default function TodoUpdateForm(props: TodoUpdateFormProps): React.ReactElement;
+export default function BookingCreateForm(props: BookingCreateFormProps): React.ReactElement;

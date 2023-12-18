@@ -1,5 +1,6 @@
 import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/api';
 import { cookies } from 'next/headers';
+// 1. Add the following two imports
 import { revalidatePath } from 'next/cache';
 import * as mutations from '@/graphql/mutations';
 
@@ -10,17 +11,14 @@ const cookiesClient = generateServerClientUsingCookies({
   cookies
 });
 
-async function createTodo(FormData) {
+// 2. Create a new Server Action
+async function createTodo(formData) {
   'use server';
   const { data } = await cookiesClient.graphql({
     query: mutations.createTodo,
     variables: {
       input: {
-        name: FormData.get('name')?.toString() ?? '',
-        email: FormData.get('email')?.toString() ?? '',
-        contactno: FormData.get('contactno')?.toString() ?? '',
-        fare: FormData.get('fare')?.toString() ?? ''
-      }
+        name: formData.get('name')?.toString() ?? ''      }
     }
   });
 
@@ -39,13 +37,11 @@ export default async function Home() {
         marginTop: '100px'
       }}
     >
- 
+      {/* 3. Update the form's action to use the
+          new create Todo Server Action*/}
       <form action={createTodo}>
         <input name="name" placeholder="Add a todo" />
-        <input name="email" placeholder="Add a email" />
-        <input name="contactno" placeholder="Add a contactno" />
-        <input name="fare" placeholder="Add a fare" />
-        <button type="submit" className="p-6 flex mx-auto">Add</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );

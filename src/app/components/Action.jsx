@@ -4,34 +4,33 @@ import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/ap
 import { cookies } from 'next/headers';
 
 import { revalidatePath } from 'next/cache';
-import * as mutations from '../../graphql/mutations';
+import * as mutations from '@/graphql/mutations';
 
 import config from '@/amplifyconfiguration.json';
 
 const cookiesClient = generateServerClientUsingCookies({
-  config, 
+  config,
   cookies});
 
-
-  export async function createTodo() {
+  export async function createTodo(formData) {
     const { data } = await cookiesClient.graphql({
       query: mutations.createTodo,
       variables: {
         input: {
-          name: FormData.get('name')?.toString() ?? ''
-          // name: formData.get('email')?.toString() ?? '',
-          // name: formData.get('contactno')?.toString() ?? '',
-          // name: formData.get('pax')?.toString() ?? '',
-          // name: formData.get('luggage')?.toString() ?? '',
-          // name: formData.get('typeoftransfer')?.toString() ?? '',
-          // name: formData.get('pickup')?.toString() ?? '',
-          // name: formData.get('dropoff')?.toString() ?? '',
-          // name: formData.get('date')?.toString() ?? '',
-          // name: formData.get('flightno')?.toString() ?? '',
-          // name: formData.get('pickuptime')?.toString() ?? '',
-          // name: formData.get('postal')?.toString() ?? '',
-          // name: formData.get('fare')?.toString() ?? '',
-          // name: formData.get('typeofvehicle')?.toString() ?? ''
+          name: formData.get('name')?.toString() ?? '',
+          email: formData.get('email')?.toString() ?? '',
+          contactno: formData.get('contactno')?.toString() ?? '',
+          pax: formData.get('pax')?.toString() ?? '',      
+          luggage: formData.get('luggage')?.toString() ?? '',     
+          date: formData.get('date')?.toString() ?? '',     
+          pickup: formData.get('pickup')?.toString() ?? '',     
+          dropoff: formData.get('dropoff')?.toString() ?? '',     
+          postal: formData.get('postal')?.toString() ?? '',     
+          flightno: formData.get('flightno')?.toString() ?? '',     
+          fare: formData.get('fare')?.toString() ?? '',     
+          typeofvehicle: formData.get('typeofvehicle')?.toString() ?? '',     
+          typeoftransfer: formData.get('typeoftransfer')?.toString() ?? '',      
+          agree: formData.get('agree')?.toString() ?? ''      
         }
       }
     });
@@ -39,7 +38,6 @@ const cookiesClient = generateServerClientUsingCookies({
     console.log("Created Todo: ", data?.createTodo )
   
     revalidatePath('/');
-
 
   } 
 

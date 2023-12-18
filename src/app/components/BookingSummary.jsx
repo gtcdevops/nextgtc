@@ -1,11 +1,10 @@
 "use client";
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
-import { createTodo } from './createTodo'
+import { useState } from "react";
+import { createTodo } from '@/app/components/Action'
 
-
-export default function BookingSummary (props) {
+export default function BookingSummary () {
 
   const [agree, setAgree] = useState(false);
 
@@ -25,29 +24,28 @@ export default function BookingSummary (props) {
   const postal = searchParams.get('postal');
   const fare = searchParams.get('fare');
   const typeofvehicle = searchParams.get('vehicle');
-  
+
   return (
+  
+  <form action={createTodo}>
 
-
-
-    <form onSubmit={createTodo}>
-
-<div className="hidden">
-      <input type="text" name={`${name}`} placeholder="Add a todo" />
-      <input type="text" name={`${email}`} placeholder="Add a todo" />
-      <input type="text" name={`${pax}`} placeholder="Add a todo" />
-      {/* <input type="text" name="luggage" description={`${luggage}`} />
-      <input type="text" name="typeoftransfer" description={`${typeoftransfer}`} />
-      <input type="text" name="pickup"  />
-      <input type="text" name="dropoff" />
-      <input type="text" name="date"  />
-      <input type="text" name="flightno" />
-      <input type="text" name="pickuptime" />
-      <input type="text" name="contactno" />
-      <input type="text" name="postal" />
-      <input type="text" name="fare" />
-      <input type="text" name="typeofvehicle" />
-      <input type="text" name="agree" />  */}
+  <div className="hidden">
+      <input type="text" name='name' defaultValue={`${name}`} placeholder="Add"/>
+      <input type="text" name='email' defaultValue={`${email}`} placeholder="som" />
+      <input type="text" name='contactno' defaultValue={`${contactno}`} placeholder="new" />
+      <input type="text" name="typeoftransfer" defaultValue={`${typeoftransfer}`} placeholder="zon" />
+      <input type="text" name= "pax" defaultValue={`${pax}`} placeholder="ton" /> 
+      <input type="text" name="luggage" defaultValue={`${luggage}`} placeholder="non"  />
+      <input type="text" name="pickup" defaultValue={`${pickup}`} placeholder="mon" />
+      <input type="text" name="dropoff" defaultValue={`${dropoff}`} placeholder="won"/>
+      <input type="text" name="postal" defaultValue={`${postal}`} placeholder="mon" />
+      <input type="text" name="pickuptime" defaultValue={`${pickuptime}`} placeholder="mon" />
+      <input type="text" name="flightno" defaultValue={`${flightno}`} placeholder="mon" />
+      <input type="text" name="typeofvehicle" defaultValue={`${typeofvehicle}`} placeholder="mon" />
+      <input type="text" name="date" defaultValue={`${date}`} placeholder="dat" />
+      <input type="text" name="fare" defaultValue={`${fare}`} placeholder="fare" />
+      <input type="text" name="agree" defaultValue={`${agree}`} placeholder="agr" /> 
+      <input type="text" name="description" placeholder="Add a todo" /> 
       </div>
 
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
@@ -155,7 +153,6 @@ export default function BookingSummary (props) {
         </dl>
       </div>
 
-
       <div className="relative flex gap-x-3 mt-8 justify-center">
               <div className="flex h-6 items-center">
                 <input name="agree" type="checkbox" onChange={(e) => setAgree(e.target.value)} value={agree} className="h-6 w-6 rounded border-gray-300 text-purple-600 focus:ring-purple-600"/>
@@ -174,16 +171,16 @@ export default function BookingSummary (props) {
           <div className="mt-8">
           <Image
             src="/creditcards.png"
-            className="mx-auto"
-            width={220}
-            height={40}
+            className="mx-auto h-auto w-50"
+            width="0"
+            height="0"
             alt="credit cards"
           />
           </div>
       </div>
 
- 
     </form>
+    
   )
   
 }
