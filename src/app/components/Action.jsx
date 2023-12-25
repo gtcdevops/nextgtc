@@ -3,7 +3,7 @@
 import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/api';
 import { cookies } from 'next/headers';
 
-import { revalidatePath } from 'next/cache';
+// import { revalidatePath } from 'next/cache';
 import * as mutations from '@/graphql/mutations';
 
 import config from '@/amplifyconfiguration.json';
@@ -24,6 +24,7 @@ const cookiesClient = generateServerClientUsingCookies({
           luggage: formData.get('luggage')?.toString() ?? '',     
           date: formData.get('date')?.toString() ?? '',     
           pickup: formData.get('pickup')?.toString() ?? '',     
+          pickuptime: formData.get('pickuptime')?.toString() ?? '',     
           dropoff: formData.get('dropoff')?.toString() ?? '',     
           postal: formData.get('postal')?.toString() ?? '',     
           flightno: formData.get('flightno')?.toString() ?? '',     
@@ -37,7 +38,7 @@ const cookiesClient = generateServerClientUsingCookies({
   
     console.log("Created Todo: ", data?.createTodo )
   
-    revalidatePath('/');
+    // revalidatePath('/booking');
 
   } 
 

@@ -6,7 +6,7 @@ import { createTodo } from '@/app/components/Action'
 
 export default function BookingSummary () {
 
-  const [agree, setAgree] = useState(false);
+  const [agree, setAgree] = useState(true);
 
   const searchParams = useSearchParams();
 
@@ -129,7 +129,7 @@ export default function BookingSummary () {
             </dd>
           </div>
 
-          <div className="mt-5 px-2 py-1 sm:grid sm:grid-cols-4 sm:gap-2 sm:px-0">
+          <div className="px-2 py-1 sm:grid sm:grid-cols-4 sm:gap-2 sm:px-0">
             <dt className="text-sm uppercase font-bold leading-6 text-gray-500">Name :</dt>
             <dd className="text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
               {name}
