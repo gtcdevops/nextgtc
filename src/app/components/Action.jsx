@@ -3,7 +3,7 @@
 import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/api';
 import { cookies } from 'next/headers';
 
-// import { revalidatePath } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import * as mutations from '@/graphql/mutations';
 
 import config from '@/amplifyconfiguration.json';
@@ -38,7 +38,7 @@ const cookiesClient = generateServerClientUsingCookies({
   
     console.log("Created Todo: ", data?.createTodo )
   
-    // revalidatePath('/booking');
+    revalidatePath('/booking');
 
   } 
 
