@@ -9,10 +9,12 @@ export default function Error({ error, reset }) {
         console.error(error)
       }, [error])
     return(
-        <>
-        <div className="text-lg">404 |  Please try again.</div>
-        <button onClick={() => reset()}>Try again</button>
-        </>
+        <main className="min-h-screen items-center">
+        <div className="text-lg text-center">404 |  Please try again.</div>
+        <button onClick={() => reset()}
+        className="text-center"
+        >Try again</button>
+        </main>
     ) 
 
     

@@ -146,7 +146,7 @@ export default function Navbar() {
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Ground Tranpsort Concierge</span>
               <Image
-            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert w-30 h-auto"
+            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert w-20 h-auto"
             src="/gtc_logo_2.svg"
             alt="GTC Logo"
             width={0}
@@ -173,7 +173,7 @@ export default function Navbar() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -191,7 +191,7 @@ export default function Navbar() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -209,7 +209,7 @@ export default function Navbar() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"

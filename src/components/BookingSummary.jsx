@@ -1,15 +1,58 @@
 "use client";
+
+import React from 'react';
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { createTodo } from '@/app/components/Action'
+import { useState, useEffect } from "react";
+import { createTodo } from '@/components/Action'
+import { loadStripe } from '@stripe/stripe-js';
+
+
+const redirectToCheckout = async () => {
+
+  const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+  if (!stripe) throw new Error('Stripe failed to initialize.');
+
+  await fetch('/api/checkout_sessions', 
+  {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+  })
+  .then(res => {
+    return res.json()
+  })
+  .then(res => {
+    console.log(res)
+    if (res.url) {
+      window.location.href = res.url
+    }
+  })
+}
+
 
 export default function BookingSummary () {
 
+  const handleSubmit = (event) => {
+    createTodo(event); redirectToCheckout(event);
+  }
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get('success')) {
+      console.log('Order placed! You will receive an email confirmation.');
+    }
+
+    if (query.get('canceled')) {
+      console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
+    }
+  }, []);
+  
   const [agree, setAgree] = useState(true);
-
   const searchParams = useSearchParams();
-
   const name = searchParams.get('name');
   const email = searchParams.get('email');
   const pax = searchParams.get('pax');
@@ -25,12 +68,16 @@ export default function BookingSummary () {
   const fare = searchParams.get('fare');
   const typeofvehicle = searchParams.get('vehicle');
 
+  const {amountTotal} = fare;
+
+
   return (
   
-  <form action={createTodo}>
+  <form action={handleSubmit}>  
 
   <div className="hidden">
       <input type="text" name='name' defaultValue={`${name}`} placeholder="Add"/>
+      <input type="text" name='ifare' defaultValue={`${amountTotal}`} placeholder="Add"/>
       <input type="text" name='email' defaultValue={`${email}`} placeholder="som" />
       <input type="text" name='contactno' defaultValue={`${contactno}`} placeholder="new" />
       <input type="text" name="typeoftransfer" defaultValue={`${typeoftransfer}`} placeholder="zon" />
@@ -162,7 +209,7 @@ export default function BookingSummary () {
               </div>
             </div>
 
-          <button type="submit"
+          <button type="submit" 
           className="grid col-span-12 w-full justify-center bg-purple-700 px-20 py-3 mt-[20px] text-lg leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"      
           >
           PAY NOW
